@@ -18,6 +18,24 @@ const App = () => {
 		setNewItem("");
 	}
 
+	function toggleTodo(id, completed) {
+		setTodos((currentTodos) => {
+			return currentTodos.map((todo) => {
+				if (todo.id === id) {
+					return { ...todo, completed };
+				}
+
+				return todo;
+			});
+		});
+	}
+
+	function deleteTodo(id) {
+		setTodos((currentTodos) => {
+			return currentTodos.filter((todo) => todo.id !== id);
+		});
+	}
+
 	return (
 		<>
 			{/*Ho usato un fragment per eludere react dal ritornare più componenti e non ho messo il div all'interno per evitare di avere un div inutile */}
@@ -39,10 +57,19 @@ const App = () => {
 					return (
 						<li key={todo.id}>
 							<label>
-								<input type="checkbox" checked={todo.completed} />
+								<input
+									type="checkbox"
+									checked={todo.completed}
+									onClick={(e) => toggleTodo(todo.id, e.target.checked)}
+								/>
 								{todo.title}
 							</label>
-							<button className="btn btn-danger">Delete</button>
+							<button
+								onClick={() => deleteTodo(todo.id)}
+								className="btn btn-danger"
+							>
+								Delete
+							</button>
 						</li>
 					);
 				})}
