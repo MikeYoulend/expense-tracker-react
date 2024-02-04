@@ -7,6 +7,8 @@ const App = () => {
 
 	function handleSubmit() {
 		e.preventDefault();
+
+		setTodos([todos]);
 	}
 
 	return (
