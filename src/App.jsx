@@ -5,7 +5,7 @@ const App = () => {
 	const [newItem, setNewItem] = useState(""); //Abbiamo una string vuota
 	const [todos, setTodos] = useState([]);
 
-	function handleSubmit() {
+	function handleSubmit(e) {
 		e.preventDefault();
 
 		setTodos((currentTodos) => {
@@ -14,6 +14,8 @@ const App = () => {
 				{ id: crypto.randomUUID(), title: newItem, completed: false },
 			];
 		});
+
+		setNewItem("");
 	}
 
 	return (
@@ -33,20 +35,17 @@ const App = () => {
 			</form>
 			<h1 className="header">Todo List</h1>
 			<ul className="list">
-				<li>
-					<label>
-						<input type="checkbox" />
-						item 1
-					</label>
-					<button className="btn btn-danger">Delete</button>
-				</li>
-				<li>
-					<label>
-						<input type="checkbox" />
-						item 2
-					</label>
-					<button className="btn btn-danger">Delete</button>
-				</li>
+				{todos.map((todo) => {
+					return (
+						<li key={todo.id}>
+							<label>
+								<input type="checkbox" checked={todo.completed} />
+								{todo.title}
+							</label>
+							<button className="btn btn-danger">Delete</button>
+						</li>
+					);
+				})}
 			</ul>
 		</>
 	);
